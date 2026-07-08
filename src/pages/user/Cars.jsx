@@ -9,24 +9,20 @@ const Cars = () => {
   const [brand, setBrand] = useState("");
 
   useEffect(() => {
+    const fetchCars = async () => {
+      try {
+        const res = await API.get("/cars");
+        setCars(res.data.cars);
+        setFilteredCars(res.data.cars);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     fetchCars();
-  }, [fetchCars]);
+  }, []);
 
   useEffect(() => {
-    filterCars();
-  }, [search, brand, cars]);
-
-  const fetchCars = async () => {
-    try {
-      const res = await API.get("/cars");
-      setCars(res.data.cars);
-      setFilteredCars(res.data.cars);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const filterCars = () => {
     let updatedCars = [...cars];
 
     if (search) {
@@ -40,7 +36,7 @@ const Cars = () => {
     }
 
     setFilteredCars(updatedCars);
-  };
+  }, [search, brand, cars]);
 
   const brands = [...new Set(cars.map((car) => car.brand))];
 

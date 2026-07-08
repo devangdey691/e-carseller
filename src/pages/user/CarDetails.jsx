@@ -3,20 +3,15 @@ import { useParams } from "react-router-dom";
 import API from "../../services/api";
 import { addToCart } from "../../services/cart";
 import { toast } from "react-toastify";
-import axios from "axios";
 
 const CarDetails = () => {
   const { id } = useParams();
   const [car, setCar] = useState(null);
 
-  useEffect(() => {
-    fetchCar();
-  }, []);
-
   const fetchCar = useCallback(async () => {
     try {
-      const res = await axios.get(`/cars/${id}`);
-      setCar(res.data);
+      const res = await API.get(`/cars/${id}`);
+      setCar(res.data.car);
     } catch (error) {
       console.log(error);
     }

@@ -20,28 +20,28 @@ const EditCar = () => {
   });
 
   useEffect(() => {
+    const fetchCar = async () => {
+      try {
+        const res = await API.get(`/cars/${id}`);
+
+        setFormData({
+          name: res.data.car.name || "",
+          brand: res.data.car.brand || "",
+          price: res.data.car.price || "",
+          year: res.data.car.year || "",
+          fuelType: res.data.car.fuelType || "",
+          transmission: res.data.car.transmission || "",
+          mileage: res.data.car.mileage || "",
+          image: res.data.car.image || "",
+          description: res.data.car.description || "",
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     fetchCar();
-  }, []);
-
-  const fetchCar = async () => {
-    try {
-      const res = await API.get(`/cars/${id}`);
-
-      setFormData({
-        name: res.data.car.name || "",
-        brand: res.data.car.brand || "",
-        price: res.data.car.price || "",
-        year: res.data.car.year || "",
-        fuelType: res.data.car.fuelType || "",
-        transmission: res.data.car.transmission || "",
-        mileage: res.data.car.mileage || "",
-        image: res.data.car.image || "",
-        description: res.data.car.description || "",
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  }, [id]);
 
   const handleChange = (e) => {
     setFormData({
