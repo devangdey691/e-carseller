@@ -10,7 +10,7 @@ const Cars = () => {
 
   useEffect(() => {
     fetchCars();
-  }, []);
+  }, [fetchCars]);
 
   useEffect(() => {
     filterCars();
